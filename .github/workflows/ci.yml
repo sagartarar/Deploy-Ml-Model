@@ -33,7 +33,8 @@ jobs:
     - name: Debug - Print current working directory
       run: pwd
     - name: Debug - Check model file existence with Python
-      run: python -c "from pathlib import Path; APP_DIR = Path('app/main.py').resolve().parent; ROOT_DIR = APP_DIR.parent; MODEL_PATH = ROOT_DIR / 'model' / 'simple_model.joblib'; print(f'Checking for model at: {MODEL_PATH}'); print(f'Model exists: {MODEL_PATH.is_file()}')"
+      run:  |
+        python -c "from pathlib import Path; APP_DIR = Path('app/main.py').resolve().parent; ROOT_DIR = APP_DIR.parent; MODEL_PATH = ROOT_DIR / 'model' / 'simple_model.joblib'; print(f'Checking for model at: {MODEL_PATH}'); print(f'Model exists: {MODEL_PATH.is_file()}')
 
     - name: Run tests with Pytest
       run: pytest tests/ # Run tests from the tests directory
