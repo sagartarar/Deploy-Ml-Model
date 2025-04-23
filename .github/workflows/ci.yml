@@ -25,6 +25,16 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
+    # Add debugging steps before running tests
+    - name: Debug - List files in root directory
+      run: ls -la
+    - name: Debug - List files in model directory
+      run: ls -la model/
+    - name: Debug - Print current working directory
+      run: pwd
+    - name: Debug - Check model file existence with Python
+      run: python -c "from pathlib import Path; APP_DIR = Path('app/main.py').resolve().parent; ROOT_DIR = APP_DIR.parent; MODEL_PATH = ROOT_DIR / 'model' / 'simple_model.joblib'; print(f'Checking for model at: {MODEL_PATH}'); print(f'Model exists: {MODEL_PATH.is_file()}')"
+
     - name: Run tests with Pytest
       run: pytest tests/ # Run tests from the tests directory
 
@@ -54,4 +64,3 @@ jobs:
         file: ./Dockerfile
         push: true # Push the image to Docker Hub
         tags: ${{ secrets.DOCKERHUB_USERNAME }}/deploy-ml-model:latest # Use your Docker Hub username and repo name
-        # Optional: Add more tags like git sha: ${{ secrets.DOCKERHUB_USERNAME }}/deploy-ml-model:${{ github.sha }}

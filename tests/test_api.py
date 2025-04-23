@@ -17,6 +17,7 @@ def test_read_root():
     client = TestClient(app) # No lifespan needed here
     response = client.get("/")
     assert response.status_code == 200
+    # **HIGHLIGHT: Ensure this message matches the API response**
     assert response.json() == {"message": "Welcome to the Deploy ML Model API. Use /docs for details."}
 
 # Tests that require the model loaded via lifespan
@@ -30,6 +31,7 @@ def test_model_status():
         assert "model_loaded" in status
         # Assert model is loaded within the 'with' block
         assert status["model_loaded"] is True, f"Model status reported not loaded. Path checked: {status.get('model_path_checked_at_startup')}"
+        # **HIGHLIGHT: Ensure this key matches the API response**
         assert "model_path_checked_at_startup" in status
 
 def test_predict_valid_input_setosa():
@@ -111,4 +113,3 @@ def test_predict_invalid_input_wrong_type():
         response = client.post("/predict/", json=payload)
         assert response.status_code == 422
         assert "detail" in response.json()
-
