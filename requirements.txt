@@ -2,8 +2,12 @@ fastapi
 uvicorn[standard]
 scikit-learn
 joblib
-pydantic
+#pydantic
 requests
 pytest
 numpy
 httpx
+pydantic>=2.0 # Ensure Pydantic v2 for lifespan and Field examples
+requests
+pytest
+numpy
